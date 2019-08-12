@@ -4,6 +4,7 @@ const express = require('express');
 const db = require('../data/db');
 const router = express.Router();
 
+
 router.get('/', (req, res) => {
     db.find()
         .then(db => {
@@ -37,14 +38,15 @@ router.get('/:id', (req, res) => {
         })
 })
 
-//issues ---
+
 router.post('/', (req, res) => {
     const newBlog = req.body;
 
     db.insert(newBlog)
         .then(newItem => {
+            console.log(newItem);
             if (newItem) {
-                const { id } = newBlog;
+                const { id } = newItem;
                 db.findById(id)
                     .then(data => {
                         res.status(200).json(data);
@@ -55,10 +57,9 @@ router.post('/', (req, res) => {
                 })
             }
         })
-        .catch(err => {
-            res.status.apply(500).json({
-                err: err,
-                message: 'Invalid DB'
+        .catch(({ message }) => {
+            res.status(500).json({
+              message
             })
         })
 
@@ -105,6 +106,10 @@ router.delete('/:id', (req, res) => {
                 message: 'Failed to delete new DB'
             })
         })
+})
+
+router.get('/:postId', (req, res) => {
+    
 })
 
 
