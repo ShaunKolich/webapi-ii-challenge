@@ -23,8 +23,8 @@ router.get('/:id', (req, res) => {
 
     db.findById(id)
         .then(getId => {
-            if (getId) {
-                res.json(getId)
+            if (getId.length) {
+                res.json(getId);
             } else {
                 res.status(404).json({
                     message: 'Invalid ID'
@@ -33,6 +33,7 @@ router.get('/:id', (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
+                err:err,
                 message: 'Failed to get ID'
             })
         })
@@ -108,9 +109,7 @@ router.delete('/:id', (req, res) => {
         })
 })
 
-router.get('/:postId', (req, res) => {
-    
-})
+
 
 
 module.exports = router;
