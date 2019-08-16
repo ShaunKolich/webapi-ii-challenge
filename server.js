@@ -2,15 +2,17 @@ const express = require('express')
 // const Router = require('./Blog/user')
 // const Blogs = require('./Blog/blog');
 
-const DBRouter = require('./Blog/blog.js');
-const server = express();
-const Comments = require('./Blog/user')
+const Blog = require('./Blog/blog.js');
+const Comments = require('./Blog/comments.js');
 
+const server = express();
 
 
 // middleware
 server.use(express.json());
-server.use('/api/posts', Comments);
+
+server.use('/api/comments', Comments);
+server.use('/db', Blog);
 
 server.get('/', (req, res) => {
     res.send(`
@@ -19,5 +21,5 @@ server.get('/', (req, res) => {
 })
 
 
-server.use('/db', DBRouter);
+
 module.exports = server;
